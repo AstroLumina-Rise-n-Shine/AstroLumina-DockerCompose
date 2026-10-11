@@ -35,7 +35,7 @@ services:
     expose:
       - "80"
     healthcheck:
-      test: [ "CMD", "wget", "--spider", "-q", "http://localhost:80" ]
+      test: [ "CMD", "wget", "--spider", "-q", "http://localhost:8080" ]
       interval: 5m
       timeout: 10s
       retries: 3

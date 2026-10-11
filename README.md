@@ -117,14 +117,14 @@ flowchart TB
         TR["Traefik v3.1<br/>:80 + :8080 dashboard<br/>file provider, watch: true"]
 
         subgraph BLUE["BLUE stack (LIVE) — replicas: 3"]
-            FB["frontend-blue :80"]
+            FB["frontend-blue :8080"]
             AB["astrology-api-blue :3031"]
             BB["booking-api-blue :3033"]
             PB["payment-api-blue :3032"]
         end
 
         subgraph GREEN["GREEN stack (idle) — replicas: 3"]
-            FG["frontend-green :80"]
+            FG["frontend-green :8080"]
             AG["astrology-api-green :3031"]
             BG["booking-api-green :3033"]
             PG["payment-api-green :3032"]
@@ -149,14 +149,14 @@ flowchart TB
         TR["Traefik v3.1<br/>:80 redirect + ACME challenge<br/>:443 TLS (letsencrypt)<br/>:8080 · dashboard via websecure"]
 
         subgraph BLUE["BLUE stack (LIVE) — replicas: 3"]
-            FB["frontend-blue :80"]
+            FB["frontend-blue :8080"]
             AB["astrology-api-blue :3031"]
             BB["booking-api-blue :3033"]
             PB["payment-api-blue :3032"]
         end
 
         subgraph GREEN["GREEN stack (idle) — replicas: 3"]
-            FG["frontend-green :80"]
+            FG["frontend-green :8080"]
             AG["astrology-api-green :3031"]
             BG["booking-api-green :3033"]
             PG["payment-api-green :3032"]
@@ -268,7 +268,7 @@ API path mapping (same in staging and production, minus TLS):
 | `/api/astrology/*` | `/api/astrology` | `http://astrology-api-<color>:3031/*` |
 | `/api/booking/*` | `/api/booking` | `http://booking-api-<color>:3033/*` |
 | `/api/payment/*` | `/api/payment` | `http://payment-api-<color>:3032/*` |
-| `/` (everything else) | — | `http://frontend-<color>:80` |
+| `/` (everything else) | — | `http://frontend-<color>:8080` |
 
 ---
 
@@ -367,7 +367,7 @@ opens the PR).
 - **Networks:** one dedicated bridge per environment (`astrolumina-dev` /
   `-staging` / `-production`). Blue, green, and Traefik all share their env's
   network so Traefik reaches backends by service name (e.g.
-  `http://frontend-blue:80`).
+  `http://frontend-blue:8080`).
 - **Only Traefik publishes ports** in staging/production. If an app service
   ever shows up under `ports:` there, that's a mistake — app services use
   `expose:` (container-network only).

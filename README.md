@@ -2,7 +2,7 @@
 
 Docker Compose infrastructure for AstroLumina across three environments:
 **development**, **staging**, and **production**. Application images are pulled
-from GHCR (`ghcr.io/astrolumina-by-carmen-ilie`) — this repo contains only
+from GHCR (`ghcr.io/astrolumina-rise-n-shine`) — this repo contains only
 orchestration: compose files, Traefik configs, env templates, and deploy workflows.
 
 ## Table of contents

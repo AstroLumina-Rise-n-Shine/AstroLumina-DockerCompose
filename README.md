@@ -64,7 +64,7 @@ never commit them.
 | Reverse proxy | None (direct ports) | Traefik `:80` + dashboard `:8080` | Traefik `:80` + `:443` + dashboard `:8080` |
 | TLS | No | No (HTTP only) | Yes (Let's Encrypt `httpChallenge`) |
 | Replicas | 1 | 3 per service | 3 per service |
-| Network | `astrolumina-dev` | `astrolumina-staging` | `astrolumina-production` |
+| Network | `astrolumina-development` | `astrolumina-staging` | `astrolumina-production` |
 | Host | `localhost` ports | `staging.dc.astrolumina.ro` | `production.dc.astrolumina.ro` |
 | Dashboard | None | Open on `:8080` (`insecure: true`) | `dashboard.dc.astrolumina.ro` + basic auth |
 | Deploy | Manual | `deploy.yml` (env + versions, branch + PR) | `deploy.yml` (env + versions, branch + PR) |
@@ -87,7 +87,7 @@ flowchart LR
         B4["${PAYMENT_API_SERVER_DC_PORT}"]
     end
 
-    subgraph NET["network: astrolumina-dev"]
+    subgraph NET["network: astrolumina-development"]
         FE["frontend<br/>image: astrolumina-frontend<br/>:80 → host port<br/>2 CPU / 2G"]
         AA["astrology-api<br/>:3031<br/>1 CPU / 1G"]
         BA["booking-api<br/>:3033<br/>1 CPU / 1G"]
@@ -364,7 +364,7 @@ opens the PR).
   workflows pin explicit tags into the server `.env` via `sed`.
 - **Production extra:** `TRAEFIK_DASHBOARD_AUTH` holds an `htpasswd`-generated
   `admin:<hash>` pair (keep the quotes in `.env`).
-- **Networks:** one dedicated bridge per environment (`astrolumina-dev` /
+- **Networks:** one dedicated bridge per environment (`astrolumina-development` /
   `-staging` / `-production`). Blue, green, and Traefik all share their env's
   network so Traefik reaches backends by service name (e.g.
   `http://frontend-blue:8080`).

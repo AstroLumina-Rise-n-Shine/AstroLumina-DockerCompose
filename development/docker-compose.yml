@@ -50,7 +50,7 @@ services:
           cpus: "0.05"
           memory: 32M
     networks:
-      - astrolumina-dev
+      - astrolumina-development
 
   astrology-api:
     image: ghcr.io/astrolumina-rise-n-shine/astrolumina-astrologyapi:${ASTROLOGY_API_DOCKER_IMAGE_TAG}
@@ -104,7 +104,7 @@ services:
           cpus: "0.05"
           memory: 96M
     networks:
-      - astrolumina-dev
+      - astrolumina-development
 
   booking-api:
     image: ghcr.io/astrolumina-rise-n-shine/astrolumina-bookingapi:${BOOKING_API_DOCKER_IMAGE_TAG}
@@ -162,7 +162,7 @@ services:
           cpus: "0.05"
           memory: 96M
     networks:
-      - astrolumina-dev
+      - astrolumina-development
 
   payment-api:
     image: ghcr.io/astrolumina-rise-n-shine/astrolumina-paymentapi:${PAYMENT_API_DOCKER_IMAGE_TAG}
@@ -221,9 +221,9 @@ services:
           cpus: "0.05"
           memory: 96M
     networks:
-      - astrolumina-dev
+      - astrolumina-development
 
 networks:
-  astrolumina-dev:
-    name: astrolumina-dev
+  astrolumina-development:
+    name: astrolumina-development
     driver: bridge

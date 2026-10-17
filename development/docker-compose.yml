@@ -44,11 +44,11 @@ services:
       replicas: 1
       resources:
         limits:
-          cpus: "0.5"
-          memory: 128M
+          cpus: "0.2"
+          memory: 64M
         reservations:
-          cpus: "0.05"
-          memory: 32M
+          cpus: "0.025"
+          memory: 16M
     networks:
       - astrolumina-development
 
@@ -98,11 +98,11 @@ services:
       replicas: 1
       resources:
         limits:
-          cpus: "0.5"
-          memory: 256M
+          cpus: "0.3"
+          memory: 128M
         reservations:
           cpus: "0.05"
-          memory: 96M
+          memory: 64M
     networks:
       - astrolumina-development
 
@@ -156,11 +156,11 @@ services:
       replicas: 1
       resources:
         limits:
-          cpus: "0.5"
-          memory: 256M
+          cpus: "0.3"
+          memory: 128M
         reservations:
           cpus: "0.05"
-          memory: 96M
+          memory: 64M
     networks:
       - astrolumina-development
 
@@ -215,11 +215,11 @@ services:
       replicas: 1
       resources:
         limits:
-          cpus: "0.5"
-          memory: 256M
+          cpus: "0.3"
+          memory: 128M
         reservations:
           cpus: "0.05"
-          memory: 96M
+          memory: 64M
     networks:
       - astrolumina-development
 

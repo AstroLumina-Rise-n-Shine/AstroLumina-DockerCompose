@@ -4,16 +4,18 @@
 name: CI
 
 on:
+  push:
+    branches: [main]
   pull_request:
     branches: [main]
 
 permissions:
   contents: read
-  security-events: write
 
 jobs:
   # YAML style consistency across compose files and Traefik configs.
   yaml-lint:
+    if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
@@ -26,6 +28,7 @@ jobs:
   # Full interpolation check: every ${VAR} referenced by the compose files
   # must resolve from the committed .env.example skeletons.
   compose-validate:
+    if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
@@ -56,6 +59,7 @@ jobs:
 
   # Shell safety for helper scripts (aliases holds functions only, so just a syntax check there).
   shellcheck:
+    if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
@@ -65,7 +69,11 @@ jobs:
   # Misconfiguration scan (ports, Traefik exposure, image tags). Fails the
   # build on HIGH/CRITICAL and uploads SARIF to the Security tab.
   trivy-config:
+    if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      security-events: write
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
       - uses: aquasecurity/trivy-action@ed142fd0673e97e23eac54620cfb913e5ce36c25 # v0.36.0
@@ -85,6 +93,7 @@ jobs:
   # license on org repos). Full-history scan; known placeholders and one
   # burned historic PAT are allowlisted in .gitleaks.toml.
   gitleaks:
+    if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
@@ -95,3 +104,24 @@ jobs:
           https://github.com/gitleaks/gitleaks/releases/download/v8.30.1/gitleaks_8.30.1_linux_x64.tar.gz
           && tar xzf gitleaks.tar.gz gitleaks && sudo install gitleaks /usr/local/bin/gitleaks
       - run: gitleaks detect --source . --config .gitleaks.toml --verbose --exit-code 1
+
+  semgrep:
+    if: github.event_name == 'pull_request'
+    name: Semgrep OSS
+    runs-on: ubuntu-latest
+    container:
+      image: semgrep/semgrep:1.182.0
+    permissions:
+      contents: read
+      security-events: write
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - name: Run Semgrep
+        id: semgrep
+        run: semgrep --config p/default --jobs 1 --sarif --output=semgrep.sarif
+      - name: Upload SARIF to GitHub
+        if: always() && steps.semgrep.outcome == 'success'
+        uses: github/codeql-action/upload-sarif@87ef0dc97def48aa960fbf026a2563ee9dbdb470 # v3
+        with:
+          sarif_file: semgrep.sarif
+          category: semgrep

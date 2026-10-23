@@ -1,12 +1,11 @@
 # CI for the central Docker Compose repo: lint, validate, scan.
-# Runs on every push and pull request. The existing deploy-staging.yml and
-# deploy-production.yml workflows are untouched (different triggers).
+# Runs for pull requests targeting main. Manual deployment is in deploy.yml.
 ---
-name: Compose CI
+name: CI
 
 on:
-  push:
   pull_request:
+    branches: [main]
 
 permissions:
   contents: read

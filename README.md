@@ -5,3 +5,4 @@ Docker Compose configuration for AstroLumina development, staging, and productio
 - [Environments](https://github.com/AstroLumina-Rise-n-Shine/AstroLumina-DockerCompose/wiki/Environments) — environment layout and routing.
 - [Blue-Green](https://github.com/AstroLumina-Rise-n-Shine/AstroLumina-DockerCompose/wiki/Blue-Green) — traffic switching and rollback.
 - [Operations](https://github.com/AstroLumina-Rise-n-Shine/AstroLumina-DockerCompose/wiki/Operations) — deployment workflow and runbooks.
+# Trigger code scanning

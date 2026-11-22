@@ -1,5 +1,5 @@
 # AstroLumina compose helpers — SOURCE this file, do not execute it:
-#   source /home/daniel/Workdir/AstroLumina/AstroLumina-DockerCompose/aliases
+#   source $HOME/Workdir/AstroLumina/AstroLumina-DockerCompose/aliases
 # (tip: add that line to ~/.bashrc)
 #
 # Every helper detects the directory you run it from:

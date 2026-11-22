@@ -8,7 +8,7 @@ repos=(
 )
 for repo in "${repos[@]}"; do
   echo "Refreshing $repo..."
-  cd "/home/daniel/Workdir/AstroLumina/$repo" || exit 1
+  cd "$HOME/Workdir/AstroLumina/$repo" || exit 1
   doppler run -- docker compose down --rmi all
   cd ..
 done
